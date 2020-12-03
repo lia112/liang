@@ -1,0 +1,101 @@
+#include<iostream>
+#include<algorithm>
+#include<stdlib.h>
+using namespace std;
+typedef struct student {
+	int number;
+	string name;
+	int Chinese;
+	int math;
+	int English;
+	struct student* next;
+}student;
+
+void createnode(student*head,int n) {
+	//student* head = new student;
+	head->next = 0;
+	student* tail = head;
+	while (n--) {
+		student* node = (student*)malloc(sizeof(student));
+		cout << "ID:";
+		cin >> node->number;
+		cout << "name:";
+		cin >> node->name;
+		cout << "Chinese:";
+		cin >> node->Chinese;
+		cout << "math:";
+		cin >> node->math;
+		cout << "English:";
+		cin >> node->English;
+		node->next = 0;
+		tail->next = node;
+		tail = tail->next;
+		cout << "\n";
+	}
+}
+void printlist(student *head) {
+	student* p = head->next;
+	cout << "\nthe information of students:";
+	while (p) {
+		cout << "\nID：" << p->number<<"\n";
+		cout << "name：" << p->name << endl;
+		cout << "Chinese：" << p->Chinese << endl;
+		cout << "math：" << p->math << endl;
+		cout << "English：" << p->English << endl;
+		p = p->next;
+		cout << "\n";
+	}
+}
+
+void deletenode(student* head) {
+	int n;
+	cout << "The ID you want to delete：";
+	cin >> n;
+	student* p = head;
+	while (p->next->number != n && p->next) p = p->next;
+	student* node = p->next;
+	p->next = p->next->next;
+	delete node;
+}
+
+void insert(student*head) {
+	int i;
+	cout << "where your want to insert:";
+	cin >> i;
+	student* p = head;
+	i--;
+	while (i-- && p->next) {
+		p = p->next;
+	}
+	student* node = new student;
+	cout << "ID:";
+	cin >> node->number;
+	cout << "name:";
+	cin >> node->name;
+	cout << "Chinese:";
+	cin >> node->Chinese;
+	cout << "math:";
+	cin >> node->math;
+	cout << "English:";
+	cin >> node->English;
+	node->next = p->next;
+	p->next = node;
+}
+int main() {
+	student* head = new student;
+	int n;
+	cout << "the number of students：";
+	cin >> n;
+	createnode(head, n);
+	//printl(head);
+	cout << "if you want delete someone ,input 1\n" << "if you want to insert someone,input 2\nif not ,input 0" <<"\ninput:";
+	int a;
+	cin >> a;
+	switch (a){
+	case 1:deletenode(head); break;
+	case 2:insert(head); break;
+	default: cout << "Thanks\n";
+		break;
+	}
+	printlist(head);
+}
